@@ -12,6 +12,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <set>
 #include <vector>
 #include <typeinfo>
 #include <limits>
@@ -21,7 +22,9 @@
 #include <queue>
 #include <cassert>
 #include <list>
+#include <map>
 #include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
