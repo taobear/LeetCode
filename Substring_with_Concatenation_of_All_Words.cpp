@@ -17,9 +17,14 @@
 // You should return the indices: [0,9].
 // (order does not matter).
 
+// 给定一个字符串 S, 一个单词的列表 words, 全是相同的长度。找到的字串以 s 即每个词的字
+// 串联恰好一次并没有任何插入的字符所有的起始索引
+// concatention: 串联
+#include "leetcode.hpp"
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
+    	
         
     }
 };

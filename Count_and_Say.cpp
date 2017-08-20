@@ -40,14 +40,18 @@ public:
     string countAndSay(int n) {
         if (n == 1) return "1";
 
-        string tmp = countAndSay(n - 1), rslt;
-        int i = 0, j = 0;
-        for (j = 1; j < tmp.size(); ++j) {
-        	if (tmp[i] != tmp[j])
-        	{
-        		rslt += std::to_string(j - i) + tmp[i];
-        		i = j;
-        	}
+        string tmp = countAndSay(n - 1) + '*', rslt;
+        int i = 0, len = tmp.size();
+        int cnt = 1;
+        for (; i < len - 1; ++i)
+        {
+            if (tmp[i] == tmp[i + 1])
+                cnt++;
+            else
+            {
+                rslt += to_string(cnt) + tmp[i];
+                cnt = 1;
+            }
         }
 
         return rslt;

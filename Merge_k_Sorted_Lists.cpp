@@ -16,23 +16,38 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+// 注意 priority_queue<int> 维护的是最大堆
 class Solution {
-typedef pair<int, ListNode*> Node;
+// typedef pair<int, ListNode*> Node;
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<Node> max_que(
-        	[](const Node &lhs, const Node &rhs) {
-        		return lhs.first < rhs.first;
-        });
-
-		for (auto l : lists)
-			max_que.push(l);
-
-		ListNode *head = max_que.pop().second();
-		max_que.push(head->next);
-		ListNode *prev = head;
-
-		
+    	auto lam = [](const ListNode* lhs, const ListNode* rhs) {
+    		return lhs->val > rhs->val;
+    	};
+ 		priority_queue<ListNode*, vector<ListNode*>, decltype(lam)> min_heap(lam);
+ 		ListNode *head, *cur;
+ 		for (size_t i = 0; i < lists.size(); ++i) {
+ 			if (lists[i]) {
+ 				min_heap.push(lists[i]);
+ 			}
+ 		}
+ 		if (!min_heap.empty()) {
+ 			head = min_heap.top();
+ 			cur = head;
+ 			min_heap.pop();
+ 			if (cur->next) 
+ 				min_heap.push(cur->next);
+ 		}
+ 		// head = min_heap.top();
+ 		while (!min_heap.empty()) {
+ 			cur->next = min_heap.top();
+ 			cur = cur->next;
+ 			min_heap.pop();
+ 			if (cur->next) 
+ 				min_heap.push(cur->next);
+ 		}
+		return head;
     }
 
 };

@@ -32,10 +32,59 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+#include "leetcode.hpp"
+
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
+};
+
+
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        
+    	ListNode *last = head;
+    	int 	  cnt = 0;
+
+    	for ( ; cnt < k && last; ++cnt) 
+    		last = last->next;
+
+    	if (cnt < k || k < 2) 
+    		return head;
+   
+    	// Reverse
+    	ListNode *dummy = new ListNode(-1);
+    	dummy->next = head;
+    	ListNode *prev = dummy->next,
+    			 *cur = prev->next;
+
+    	while (cur != last) {
+    		prev->next = cur->next;
+    		cur->next = dummy->next;
+    		dummy->next = cur;
+    		cur = prev->next;
+    	}
+
+    	head = dummy->next;
+
+    	delete dummy;
+    	prev->next = reverseKGroup(last, k);
+    	return head;
     }
 };
 
+int main(int argc, char **argv)
+{
+	Solution sln;
+
+	ListNode *n1 = new ListNode(1);
+	ListNode *n2 = new ListNode(2);
+	n1->next = n2;
+
+	ListNode *head = sln.reverseKGroup(n1, 2);
+	while (head) {
+		cout << head->val;
+		head = head->next;
+	}
+}
