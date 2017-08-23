@@ -22,7 +22,7 @@
 // Given n and k, return the kth permutation sequence.
 
 #include "leetcode.hpp"
-#include <string>
+
 class Solution {
 public:
 	string getPermutation(int n, int k) {
@@ -33,6 +33,9 @@ public:
         string ans;
         vector<int> visited(n, 0);
         int kth = k - 1;
+
+        if (kth / fact[i] >= n || kth <= 0)
+        	return "";
 
         for (int i = n - 1; i >= 0; --i) {
         	int dig = kth / fact[i];
