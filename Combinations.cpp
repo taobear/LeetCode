@@ -27,26 +27,24 @@ class Solution {
 public:
 	vector<vector<int>> combine(int n, int k) {
 		vector<vector<int>> rslt;
-		vector<int> visited(n, 0);
-		vector<int> tmp;
-		combineDFS(rslt, visited, n, tmp, 0, k, 0);
+		vector<int> vec;
+		helper(rslt, vec, n, 0, k);
 		return rslt;
+
 	}
 
-	void combineDFS(vector<vector<int>>& rslt, vector<int>& visited,
-						int n, vector<int>& vec, int i, int k, int level) 
-	{
-		if (i > k) 
-			rslt.push_back(vec);
+	void helper(vector<vector<int>> &rslt, vector<int>& vec, int n, int i, 
+				int level) {
+		if (i >= n || !level) {
+			if (!level)  
+				rslt.push_back(vec) ;
+			return;
+		}
 
-		for (int j = 0; j < n; ++j) {
-			if (visited[j] || level >= j)
-				continue;
-
-			visited[j] = 1;
+		for (int j = i; j < n; ++j) {
 			vec.push_back(j + 1);
-			combineDFS(rslt, visited, n, vec, j + 1, k, j);
-			visited[j] = 0;
+			helper(rslt, vec, n, j + 1, level - 1);
+			vec.pop_back();
 		}
 	}
 };

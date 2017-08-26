@@ -1,0 +1,52 @@
+/*
+ Author: 		TaoBear
+ Update:		Aug 25, 2017
+ Problem: 		Remove Duplicates from Sorted List II
+ Difficulty: 	Medium
+ Source:		https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/
+ Tags: 			Linked List
+*/
+
+// Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+
+// For example,
+// Given 1->2->3->3->4->4->5, return 1->2->5.
+// Given 1->1->1->2->3, return 2->3.
+
+#include "leetcode.hpp"
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+    	ListNode *dummy = new ListNode(0);
+    	dummy->next = head;
+    	ListNode *prev = dummy;
+    	ListNode *cur = prev->next;
+
+    	while (cur) {
+    		if (!cur->next || prev->next->val != cur->next->val){
+    			if (prev->next == cur) 
+    				prev = prev->next;
+    			else
+    				prev->next = cur->next;
+    		} 
+    		cur = cur->next;
+    	}
+    	head = dummy->next;
+    	delete dummy;
+    	return head;
+    }
+};
+
+int main(int argc, char **argv)
+{
+	ListNode *
+}
