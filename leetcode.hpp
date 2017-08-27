@@ -22,6 +22,7 @@
 #include <queue>
 #include <cassert>
 #include <list>
+#include <stack>
 #include <map>
 #include <unordered_map>
 #include <unordered_set>

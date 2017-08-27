@@ -39,10 +39,49 @@ int largestRectangleArea1(vector<int> &heights) {
 	return ans;
 }
 
+int largestRectangleArea2(vector<int> &heights) {
+	int n = heights.size();
+	if (n < 1) return 0;
+	int maxArea = 0;
+
+	stack<int> stk;
+	stk.push(heights[0]);
+	for (int i = 1; i < n; ++i) {
+		if (stk.top() <= heights[i]) 
+			stk.push(heights[i]);
+		else {
+			int cnt = 0;
+			// int area = 0;
+			int last = 0;
+			while (!stk.empty() && stk.top() > heights[i]) {
+				// last = stk.top();
+				maxArea = max(maxArea, stk.top() * ++cnt);
+				stk.pop();
+			}
+
+			// maxArea = max(maxArea, last * cnt);
+			while (cnt-- >= 0) {
+				stk.push(heights[i]);
+			}
+		}
+	}
+
+	//cout << stk.size() << endl;
+
+	int num = 0;
+	while (++num <= n) {
+		maxArea = max(maxArea, stk.top() * num);
+		stk.pop();
+	}
+
+	return maxArea;
+}
+
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
-        return largestRectangleArea1(heights);
+       // return largestRectangleArea1(heights);
+    	return largestRectangleArea2(heights);
     }
 };
 
@@ -51,8 +90,11 @@ int main(int argc, char **argv)
 	Solution sln;
 
 	vector<int> input1 = {2, 1, 5, 6, 2, 3};
+	vector<int> input2 = {3, 6, 5, 7, 4, 8, 1, 0};
 
 	int target1 = 10;
+	int target2 = 20;
 
 	VERIFY_IS_EQUAL(sln.largestRectangleArea(input1), target1);
+	VERIFY_IS_EQUAL(sln.largestRectangleArea(input2), target2);
 }
