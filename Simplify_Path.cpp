@@ -24,25 +24,19 @@ public:
         int i = 0, j = 0;
 
         for ( ; j < len; ++j) {
-        	if (path[j] == '/' || j == len - 1) 
+        	if (path[j] == '/') 
         	{
-        	    string tmp;
-        		if (j == len - 1 && path[j] != '/')
-        			tmp = path.substr(i, j - i + 1);
-        		else
-        			tmp = path.substr(i, j - i);
-
-        		if (!tmp.empty()) { 
+        		if (i != j) {
+        			string tmp = path.substr(i, j - i);
         			if (tmp == ".") {
 
-        			} else if (tmp == "..") {
+        			} else if (tmp == "..")
         				if (!stk.empty()) stk.pop_back();
-        			}
         			else 
         				stk.push_back("/" + tmp);
         		}
         		i = j + 1;
-        	} 
+        	}
         }
 
         string rslt;
@@ -65,16 +59,7 @@ int main(int argc, char **argv)
 	string input3 = "/../";
 	string target3 = "/";
 
-	string input4 = "/a/.....";
-	string target4 = "/a/.....";
-
-
-	string input5 = "/.././GVzvE/./xBjU///../..///././//////T/../../.././zu/q/e";
-	string target5 = "/zu/q/e";
-
 	VERIFY_IS_EQUAL(sln.simplifyPath(input1), target1);
 	VERIFY_IS_EQUAL(sln.simplifyPath(input2), target2);
 	VERIFY_IS_EQUAL(sln.simplifyPath(input3), target3);
-	VERIFY_IS_EQUAL(sln.simplifyPath(input4), target4);
-	VERIFY_IS_EQUAL(sln.simplifyPath(input5), target5);
 }

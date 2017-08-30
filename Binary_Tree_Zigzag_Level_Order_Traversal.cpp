@@ -38,7 +38,25 @@ class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
         int flag = true;
-        
+        vector<vector<int>> rslt;
+        zigzagLevelOrderBFS(rslt, root, 0);
+        for (int i = 0; i < rslt.size(); ++i) {
+        	if (i % 2)
+        		reverse(rslt[i].begin(), rslt[i].end());
+        }
+        return rslt;
+    }
+
+    void zigzagLevelOrderBFS(vector<vector<int>>& rslt, TreeNode* root, int level) 
+    {
+    	if (!root)
+    		return;
+    	if (rslt.size() <= level)
+    		rslt.push_back(vector<int>{});
+
+    	rslt[level].push_back(root->val);
+    	zigzagLevelOrderBFS(rslt, root->left, level + 1);
+    	zigzagLevelOrderBFS(rslt, root->right, level + 1);
     }
 };
 

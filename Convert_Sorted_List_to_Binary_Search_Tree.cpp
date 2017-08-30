@@ -30,9 +30,44 @@
 class Solution {
 public:
     TreeNode* sortedListToBST(ListNode* head) {
-        
+        return listToBST(head, NULL);
     }
 
-    
+    TreeNode* listToBST(ListNode* head, ListNode* tail) 
+    {
+    	//TreeNode* root = nullptr;
+
+    	if (head == tail)
+    		return NULL;
+    	
+    	if (head->next == tail) 
+    		return new TreeNode(head->val);
+    	
+
+    	ListNode *mid = head, *tmp = head;
+    	while (tmp != tail && tmp->next != tail) {
+    		mid = mid->next;
+    		tmp = tmp->next->next;
+    	}	
+
+    	TreeNode *root = new TreeNode(mid->val);
+    	root->left = listToBST(head, mid);
+    	root->right = listToBST(mid->next, tail);
+    	return root;
+
+    }
+
+    TreeNode* listToBST(ListNode *&node, int left, int right)
+    {
+    	if (right > left) return NULL;
+
+    	int mid = left + (right - left) / 2;
+    	TreeNode *left = listToBST(node, left, mid - 1);
+    	TreeNode *root = new TreeNode(node->val);
+    	root->left = left;
+    	node = node->next;
+    	root->right = listToBST(node, mid + 1, right);
+    	return root;
+    }
 };
 
